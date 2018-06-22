@@ -1,0 +1,13 @@
+{
+  "useCamelCasedPaths": false,
+  "reduxPath": "redux",
+  "actionsPath": "redux/actions",
+  "typesPath": "redux/types",
+  "statesPath": "redux/states",
+  "storeTemplatePath": "redux/templates/store.dot",
+  "actionTemplatePath": "redux/templates/action.dot",
+  "actionsIndexTemplatePath": "redux/templates/action-index.dot",
+  "typesTemplatePath": "redux/templates/types.dot",
+  "stateTemplatePath": "redux/templates/state.dot",
+  "statesIndexTemplatePath": "redux/templates/state-index.dot"
+}
