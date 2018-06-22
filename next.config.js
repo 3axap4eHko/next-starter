@@ -2,8 +2,10 @@ const Path = require('path');
 
 module.exports = {
   serverRuntimeConfig: {
+
   },
   publicRuntimeConfig: {
+    //graphqlEndpoint: 'ws://localhost:3000/subscription',
     //subscriptionEndpoint: 'ws://localhost:3000/subscription',
   },
   webpack: (config, {}) => {

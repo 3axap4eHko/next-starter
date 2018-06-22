@@ -12,7 +12,7 @@ const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 export default (initState) => {
 
   const httpLink = createHttpLink({
-    uri: publicRuntimeConfig.apiEndpoint,
+    uri: publicRuntimeConfig.graphqlEndpoint,
     credentials: 'same-origin',
   });
 
