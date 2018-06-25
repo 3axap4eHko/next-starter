@@ -17,14 +17,25 @@ export default class Chart extends Component {
   componentDidMount() {
     switch (this.props.type) {
       case 'chart':
-        return Highcharts.chart(this.props.id, this.props.options);
+        this.chart = Highcharts.chart(this.props.id, this.props.options);
+        break;
       case 'stock':
         Highstock(Highcharts);
-        return Highcharts.stockChart(this.props.id, this.props.options);
+        this.chart = Highcharts.stockChart(this.props.id, this.props.options);
+        break;
       case 'map':
         Highmap(Highcharts);
-        return Highcharts.mapChart(this.props.id, this.props.options);
+        this.chart = Highcharts.mapChart(this.props.id, this.props.options);
+        break;
     }
+  }
+
+  componentDidUpdate() {
+    this.chart.update(this.props.options);
+  }
+  
+  componentWillUnmount() {
+    this.chart.destroy();
   }
 
   render() {
