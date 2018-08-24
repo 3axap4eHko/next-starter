@@ -1,6 +1,5 @@
 import fetch from 'isomorphic-unfetch';
 import React from 'react';
-import { object } from 'prop-types';
 import Helmet from 'react-helmet';
 import Document, { Head, Main, NextScript } from 'next/document';
 import { JssProvider, SheetsRegistry } from 'react-jss';

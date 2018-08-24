@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { object } from 'prop-types';
 import Head from 'next/head';
 import Helmet from 'react-helmet';
 import { getDataFromTree } from 'react-apollo';
 import getApolloClient from '../utils/getApolloClient';
-import getStore from '../redux/getStore';
 
 export default WrappedComponent => {
   const componentName = WrappedComponent.displayName || WrappedComponent.name;
@@ -15,7 +13,6 @@ export default WrappedComponent => {
 
     static async getInitialProps({ Component, router, ctx }) {
       let pageProps = {};
-      ctx.store = getStore();
       ctx.apolloClient = getApolloClient();
 
       if (Component.getInitialProps) {
@@ -28,7 +25,6 @@ export default WrappedComponent => {
               {...pageProps}
               Component={Component}
               router={router}
-              store={ctx.store}
               apolloClient={ctx.apolloClient}
             />
             ,
@@ -40,25 +36,21 @@ export default WrappedComponent => {
         Head.rewind();
       }
 
-      const storeState = ctx.store.getState();
-      storeState.__get = () => ctx.store;
       const apolloState = ctx.apolloClient.cache.extract();
       apolloState.__get = () => ctx.apolloClient;
 
       return {
         ...pageProps,
-        storeState,
         apolloState,
       };
     }
 
     // Server Side Transfer
-    store = getStore(this.props.storeState);
     apolloClient = getApolloClient(this.props.apolloState);
 
     render() {
       return (
-        <WrappedComponent {...this.props} apolloClient={this.apolloClient} store={this.store} sheetsManager={new Map} />
+        <WrappedComponent {...this.props} apolloClient={this.apolloClient} sheetsManager={new Map} />
       );
     };
   };

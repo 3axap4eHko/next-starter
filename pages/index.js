@@ -1,12 +1,12 @@
 import React, { Component, createRef } from 'react';
 import {} from 'prop-types';
+import Link from 'next/link';
 import Helmet from 'react-helmet';
+
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
 import Chart from '../components/Chart';
 import Layout from '../components/Layout';
 
@@ -89,7 +89,9 @@ export default class Index extends Component {
 
     return (
       <Layout>
-
+        <Link href="/dashboard">
+          <a>Post</a>
+        </Link>
         <Grid item xs={12}>
           <Card className={classes.card}>
             <CardContent>

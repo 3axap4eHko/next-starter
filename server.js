@@ -1,17 +1,18 @@
 const Express = require('express');
 const Next = require('next');
-const router = require('./router');
+const routes = require('./routes');
+const bodyParser = require('body-parser');
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
 const app = Next({ dev });
-const handle = app.getRequestHandler();
+const handle = routes.getRequestHandler(app);
 
 (async () => {
   await app.prepare();
   const server = Express();
 
-  server.use(router);
+  server.use(bodyParser.json());
 
   server.get('/posts/:id', (req, res) => {
     return app.render(req, res, '/posts', req.params);
