@@ -67,7 +67,7 @@ export default class Layout extends Component {
       <Fragment>
         <AppBar position="absolute" className={classes.appBar}>
           <Toolbar>
-            <Typography variant="title" color="inherit" className={classes.flex}>
+            <Typography variant="display1" color="inherit" className={classes.flex}>
               Next Starter
             </Typography>
             <Button color="inherit">Login</Button>

@@ -18,7 +18,6 @@ export default class Calendar extends Component {
     const { classes } = this.props;
     return (
       <Layout>
-
         <Helmet>
           <title>Calendar</title>
         </Helmet>
