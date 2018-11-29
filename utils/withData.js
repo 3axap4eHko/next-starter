@@ -15,8 +15,8 @@ export default WrappedComponent => {
       let pageProps = {};
       ctx.apolloClient = getApolloClient();
 
-      if (Component.getInitialProps) {
-        pageProps = await Component.getInitialProps(ctx);
+      if (WrappedComponent.getInitialProps) {
+        pageProps = await WrappedComponent.getInitialProps(ctx);
       }
       if (!process.browser) {
         try {
