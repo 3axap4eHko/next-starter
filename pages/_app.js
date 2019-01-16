@@ -1,15 +1,12 @@
+import '../utils/setup';
 import React, { Component } from 'react';
-import { object } from 'prop-types';
 import Application from 'next/app';
-import Link from 'next/link';
 import { ApolloProvider } from 'react-apollo';
 import { MuiThemeProvider } from '@material-ui/core';
 
-import router from '../routes';
 import withData from '../utils/withData';
 import theme from '../theme';
 
-router.inject(Link);
 
 @withData
 export default class App extends Application {

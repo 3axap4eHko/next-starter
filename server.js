@@ -2,7 +2,7 @@ const Express = require('express');
 const Next = require('next');
 const bodyParser = require('body-parser');
 
-const routes = require('./routes');
+const routes = require('./utils');
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';

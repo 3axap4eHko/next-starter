@@ -7,33 +7,7 @@ class Router {
     this.routes = [];
     this.addMany(routeMap);
   }
-
-  inject(Link) {
-    if (Link.__injected) {
-      return;
-    }
-    const _formatUrls = Link.prototype.formatUrls;
-    const router = this;
-    Link.__injected = true;
-
-    Link.prototype.formatUrls = function (props) {
-      const { page, matches } = router.match(props.href);
-      if (matches) {
-        const href = {
-          pathname: page,
-          query: matches,
-        };
-        _formatUrls.call(this, {
-          ...props,
-          href,
-          as: props.href,
-        });
-      } else {
-        _formatUrls.call(this, props);
-      }
-    };
-  }
-
+  
   add(route, options) {
     const page = typeof options === 'string' ? options : options.page;
 
