@@ -1,15 +1,15 @@
 import '../utils/setup';
 import React, { Component } from 'react';
-import Application from 'next/app';
-import { ApolloProvider } from 'react-apollo';
-import { MuiThemeProvider } from '@material-ui/core';
-
+import Application, { Container } from 'next/app';
 import withData from '../utils/withData';
-import theme from '../theme';
-
+import getInitialProps from '../utils/getInitialProps';
 
 @withData
 export default class App extends Application {
+
+  static async getInitialProps({ Component, ctx }) {
+    return getInitialProps(Component, ctx);
+  }
 
   componentDidMount() {
     const ssrStyles = document.getElementById('ssr-styles');
@@ -17,13 +17,11 @@ export default class App extends Application {
   }
 
   render() {
-    const { Component, pageProps, apolloClient, sheetsManager } = this.props;
+    const { Component, pageProps } = this.props;
     return (
-      <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
-        <ApolloProvider client={apolloClient}>
-          <Component {...pageProps} />
-        </ApolloProvider>
-      </MuiThemeProvider>
+      <Container>
+        <Component {...pageProps} />
+      </Container>
     );
   }
 }

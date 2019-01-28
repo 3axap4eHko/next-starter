@@ -2,8 +2,7 @@ import fetch from 'isomorphic-unfetch';
 import React from 'react';
 import Helmet from 'react-helmet';
 import Document, { Head, Main, NextScript } from 'next/document';
-import { JssProvider, SheetsRegistry } from 'react-jss';
-import { createGenerateClassName } from '@material-ui/core/styles';
+import { JssProvider } from 'react-jss';
 
 global.fetch = fetch;
 
@@ -11,11 +10,10 @@ export default class Doc extends Document {
 
   static async getInitialProps(ctx) {
     const { renderPage } = ctx;
-    const sheets = new SheetsRegistry();
 
     const app = App => props => {
       return (
-        <JssProvider registry={sheets} generateClassName={createGenerateClassName()}>
+        <JssProvider registry={ctx.sheetsRegistry}>
           <App {...props} />
         </JssProvider>
       );
@@ -23,7 +21,9 @@ export default class Doc extends Document {
     const renderedPage = await renderPage(app);
     const helmet = Helmet.renderStatic();
 
-    return { ...renderedPage, sheets, helmet };
+    const css = ctx.sheetsRegistry.toString();
+
+    return { ...renderedPage, css, helmet };
   }
 
   get helmetHtmlAttrs() {
@@ -41,7 +41,7 @@ export default class Doc extends Document {
   }
 
   render() {
-    const { sheets } = this.props;
+    const { css } = this.props;
 
     return (
       <html {...this.helmetHtmlAttrs}>
@@ -49,7 +49,7 @@ export default class Doc extends Document {
         {this.helmetHead}
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-        <style type="text/css" data-meta="jss-ssr" id="ssr-styles" dangerouslySetInnerHTML={{ __html: sheets.toString() }} />
+        <style type="text/css" data-meta="jss-ssr" id="ssr-styles" dangerouslySetInnerHTML={{ __html: css }} />
       </Head>
       <body {...this.helmetBodyAttrs}>
       <Main />

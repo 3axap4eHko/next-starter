@@ -1,13 +1,13 @@
-const Pattern = require('uriil/Pattern');
+import Pattern from 'uriil/Pattern';
 
-class Router {
+export default class Router {
 
   constructor(routeMap = {}) {
 
     this.routes = [];
     this.addMany(routeMap);
   }
-  
+
   add(route, options) {
     const page = typeof options === 'string' ? options : options.page;
 
@@ -33,7 +33,6 @@ class Router {
     return (req, res, next) => {
       const { page, matches } = this.match(req.url);
       if (matches) {
-        console.log('Matched', page, matches);
         app.render(req, res, page, matches);
       } else {
         handler(req, res, next);
@@ -41,7 +40,3 @@ class Router {
     };
   }
 }
-
-module.exports = function (routeMap) {
-  return new Router(routeMap);
-};

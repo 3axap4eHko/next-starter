@@ -1,8 +1,7 @@
-const Express = require('express');
-const Next = require('next');
-const bodyParser = require('body-parser');
-
-const routes = require('./utils');
+import Express from 'express';
+import Next from 'next';
+import bodyParser from 'body-parser';
+import routes from './utils/routes';
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
@@ -15,13 +14,7 @@ const handle = routes.getRequestHandler(app);
 
   server.use(bodyParser.json());
 
-  server.get('/posts/:id', (req, res) => {
-    return app.render(req, res, '/posts', req.params);
-  });
-
-  server.get('*', (req, res) => {
-    return handle(req, res);
-  });
+  server.get('*', (req, res) => handle(req, res));
 
   server.listen(port, (err) => {
     if (err) {
