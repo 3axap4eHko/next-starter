@@ -12,8 +12,7 @@ module.exports = {
 
     config.resolve = {
       alias: {
-        UI: Path.resolve(__dirname, './components/UI'),
-        dbg: Path.resolve(__dirname, './utils/dbg'),
+
       },
     };
     config.module.rules.push({ test: /\.(svg|jpg|png|gif)$/, loader: 'url-loader', options: { name: 'images/[name].[ext]', outputPath: 'static' } });

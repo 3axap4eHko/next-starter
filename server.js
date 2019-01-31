@@ -12,6 +12,7 @@ const handle = routes.getRequestHandler(app);
   await app.prepare();
   const server = Express();
 
+  server.use(Express.static('public'));
   server.use(bodyParser.json());
 
   server.get('*', (req, res) => handle(req, res));
