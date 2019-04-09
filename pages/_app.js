@@ -1,8 +1,8 @@
 import '../utils/setup';
 import React, { Component } from 'react';
 import Application, { Container } from 'next/app';
-import withData from '../utils/withData';
 import getInitialProps from '../utils/getInitialProps';
+import withData from '../components/withData';
 
 @withData
 export default class App extends Application {

@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-unfetch';
+import fetch from 'isomorphic-fetch';
 import React from 'react';
 import Helmet from 'react-helmet';
 import Document, { Head, Main, NextScript } from 'next/document';

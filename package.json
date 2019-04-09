@@ -1,6 +1,6 @@
 {
   "name": "next-starter",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -34,9 +34,10 @@
     "express": "^4.16.3",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.9.2",
-    "isomorphic-unfetch": "^3.0.0",
+    "isomorphic-fetch": "^2.2.1",
     "jss": "^9.8.7",
-    "next": "^7.0.1",
+    "next": "^8.0.4",
+    "nprogress": "^0.2.0",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-apollo": "^2.1.6",

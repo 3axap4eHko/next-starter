@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Head from 'next/head';
 import Helmet from 'react-helmet';
-import { ApolloProvider, getDataFromTree } from 'react-apollo';
+import { ApolloProvider, getDataFromTree } from 'react-apollo/index';
 import { SheetsRegistry, ThemeProvider } from 'react-jss';
 import createApolloClient from '../utils/createApolloClient';
 import getInitialProps from '../utils/getInitialProps';
