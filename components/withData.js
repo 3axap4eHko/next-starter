@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Head from 'next/head';
 import Helmet from 'react-helmet';
 import { ApolloProvider, getDataFromTree } from 'react-apollo/index';
-import { SheetsRegistry, ThemeProvider } from 'react-jss';
+import { ThemeProvider } from 'react-jss';
 import createApolloClient from '../utils/createApolloClient';
 import getInitialProps from '../utils/getInitialProps';
 import theme from '../theme';
@@ -18,7 +18,7 @@ export default WrappedComponent => {
       return getInitialProps(WrappedComponent, ctx);
     }
 
-    static renderComponent({ router, sheetsRegistry, apolloClient, theme, ...props }) {
+    static renderComponent({ router, apolloClient, theme, ...props }) {
       return (
         <ThemeProvider theme={theme}>
           <ApolloProvider client={apolloClient}>
@@ -31,7 +31,6 @@ export default WrappedComponent => {
     static async getServerInitialProps({ Component, router, ctx }) {
       const pageProps = await WithData.getPageProps({ Component, router, ctx });
       const apolloClient = createApolloClient({});
-      const sheetsRegistry = ctx.sheetsRegistry = new SheetsRegistry();
 
       try {
         const app = WithData.renderComponent({
@@ -40,14 +39,12 @@ export default WrappedComponent => {
           router,
           apolloClient,
           theme,
-          sheetsRegistry,
         });
         await getDataFromTree(app);
       } catch (error) {
         console.error('Error while running `getDataFromTree`', error);
       }
 
-      sheetsRegistry.reset();
       Head.rewind();
       Helmet.rewind();
 
@@ -57,7 +54,6 @@ export default WrappedComponent => {
         ...pageProps,
         theme,
         apolloState,
-        sheetsRegistry: () => sheetsRegistry,
       };
     }
 
@@ -70,7 +66,6 @@ export default WrappedComponent => {
         ...pageProps,
         theme,
         apolloState,
-        sheetsRegistry: () => null,
       };
     }
 
@@ -81,7 +76,6 @@ export default WrappedComponent => {
     // Server Side Transfer
     apolloClient = createApolloClient(this.props.apolloState, this.props.config);
     theme = this.props.theme;
-    sheetsRegistry = this.props.sheetsRegistry && this.props.sheetsRegistry();
 
     render() {
 
@@ -89,7 +83,6 @@ export default WrappedComponent => {
         ...this.props,
         apolloClient: this.apolloClient,
         theme: this.theme,
-        sheetsRegistry: this.sheetsRegistry && this.props.sheetsRegistry(),
       });
     };
   }
