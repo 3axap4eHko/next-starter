@@ -2,7 +2,7 @@ import fetch from 'isomorphic-fetch';
 import React, { Fragment } from 'react';
 import Helmet from 'react-helmet';
 import Document, { Head, Main, NextScript } from 'next/document';
-import { JssProvider, SheetsRegistry } from 'react-jss';
+import { SheetsRegistry, JssProvider, createGenerateClassName } from 'react-jss';
 
 global.fetch = fetch;
 
@@ -11,29 +11,29 @@ export default class Doc extends Document {
   static async getInitialProps(ctx) {
     const { renderPage } = ctx;
     const sheetsRegistry = new SheetsRegistry();
+    const generateId = createGenerateClassName();
 
     ctx.renderPage = () => renderPage({
       enhanceApp: App => function (props) {
         return (
-          <JssProvider registry={sheetsRegistry}>
+          <JssProvider registry={sheetsRegistry} generateId={generateId}>
             <App {...props} />
           </JssProvider>
         );
       },
-      //enhanceComponent: Component => Component,
     });
 
-    const documentProps = await super.getInitialProps(ctx);
+    const initialProps = await Document.getInitialProps(ctx);
 
     return {
-      ...documentProps,
+      ...initialProps,
       helmet: Helmet.renderStatic(),
       styles: (
-        <Fragment>
-          {documentProps.styles}
+        <>
+          {initialProps.styles}
           <style type="text/css" data-meta="jss-ssr" id="ssr-styles" dangerouslySetInnerHTML={{ __html: sheetsRegistry.toString() }} />
-        </Fragment>
-      )
+        </>
+      ),
     }
   }
 

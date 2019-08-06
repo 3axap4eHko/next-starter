@@ -4,10 +4,10 @@ import Link from 'next/link';
 import Helmet from 'react-helmet';
 import injectSheet from 'react-jss';
 
-const styles = () => ({
+const styles = ({ colors }) => ({
   link: {
-    color: '#000'
-  }
+    color: colors.primary,
+  },
 });
 
 @injectSheet(styles)

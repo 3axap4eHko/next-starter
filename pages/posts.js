@@ -5,18 +5,16 @@ import Helmet from 'react-helmet';
 import injectSheet from 'react-jss';
 
 
-const styles = (theme) => ({
+const styles = ({ colors }) => ({
   link: {
-    color: '#000'
-  }
-
+    color: colors.primary,
+  },
 });
 
 @injectSheet(styles)
 export default class Posts extends Component {
 
   static getInitialProps({ query }) {
-    console.log(query);
   }
 
   render() {
