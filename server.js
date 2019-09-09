@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import Express from 'express';
 import Next from 'next';
 import bodyParser from 'body-parser';

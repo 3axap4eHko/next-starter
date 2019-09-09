@@ -1,5 +1,6 @@
 /.DS_Store
 /.idea
 /.next
+/coverage
 /*.log*
 node_modules/
