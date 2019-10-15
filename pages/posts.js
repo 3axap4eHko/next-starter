@@ -1,34 +1,27 @@
-import React, { Component, Fragment } from 'react';
+import React from 'react';
 import {} from 'prop-types';
 import Link from 'next/link';
 import Helmet from 'react-helmet';
-import injectSheet from 'react-jss';
+import { createUseStyles } from 'react-jss';
 
-
-const styles = ({ colors }) => ({
+const useStyles = createUseStyles(({ colors }) => ({
   link: {
     color: colors.primary,
   },
-});
+}));
 
-@injectSheet(styles)
-export default class Posts extends Component {
+export default function Posts() {
+  const classes = useStyles();
 
-  static getInitialProps({ query }) {
-  }
-
-  render() {
-    const { classes } = this.props;
-    return (
-      <Fragment>
-        <Link href="/">
-          <a className={classes.link}>Dashboard</a>
-        </Link>
-        Post
-        <Helmet>
-          <title>Posts</title>
-        </Helmet>
-      </Fragment>
-    );
-  }
+  return (
+    <>
+      <Link href="/">
+        <a className={classes.link}>Dashboard</a>
+      </Link>
+      Post
+      <Helmet>
+        <title>Posts</title>
+      </Helmet>
+    </>
+  );
 }

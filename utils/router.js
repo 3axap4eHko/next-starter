@@ -1,4 +1,5 @@
 import Pattern from 'uriil/Pattern';
+// import PTRE from 'path-to-regexp'; //TODO move to PTRE
 
 export default class Router {
 

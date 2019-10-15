@@ -1,6 +1,6 @@
 import '../utils/setup';
 import React, { Component } from 'react';
-import Application, { Container } from 'next/app';
+import Application from 'next/app';
 import getInitialProps from '../utils/getInitialProps';
 import withData from '../components/withData';
 
