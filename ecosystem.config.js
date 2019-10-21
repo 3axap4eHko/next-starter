@@ -2,7 +2,7 @@ const isDev = process.env.NODE_ENV === 'development';
 
 const instances = isDev ? 1 : 3;
 const execMode = isDev ? 'fork' : 'cluster';
-const watch = isDev ? './server.js' : false;
+const watch = isDev ? ['./server.js', './actions', './utils'] : false;
 
 module.exports = {
   apps: [
@@ -14,7 +14,7 @@ module.exports = {
       autorestart: true,
       watch,
       max_memory_restart: '2G',
-      node_args: '-r @babel/register',
+      node_args: '-r @babel/register -r dotenv/config',
     },
   ],
 };

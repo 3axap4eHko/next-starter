@@ -3,6 +3,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import Document, { Head, Main, NextScript } from 'next/document';
 import { SheetsRegistry, JssProvider, createGenerateId } from 'react-jss';
+import theme from '../theme';
 
 global.fetch = fetch;
 
@@ -56,9 +57,15 @@ export default class Doc extends Document {
     return (
       <html {...this.helmetHtmlAttrComponents}>
       <Head>
-        {this.helmetHeadComponents}
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
+        <meta charSet="utf-8" />
+        <meta
+          name="viewport"
+          content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
+        />
+        <meta name="theme-color" content={theme.palette.primary.main} />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+        {this.helmetHeadComponents}
       </Head>
       <body {...this.helmetBodyAttrComponents}>
       <Main />

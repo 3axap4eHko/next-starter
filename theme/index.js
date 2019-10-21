@@ -1,5 +1,5 @@
 export default {
-  colors: {
+  palette: {
     background: '#212121',
     backgroundContrast: '#ffffff',
     primary: '#37474f',

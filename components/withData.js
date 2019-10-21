@@ -1,24 +1,22 @@
 import React, { Component } from 'react';
 import Head from 'next/head';
 import Helmet from 'react-helmet';
-import { ApolloProvider, getDataFromTree } from 'react-apollo';
+import HNRS from 'hoist-non-react-statics';
 import { ThemeProvider } from 'react-jss';
+import { ApolloProvider, getDataFromTree } from 'react-apollo';
 import createApolloClient from '../utils/createApolloClient';
-import getInitialProps from '../utils/getInitialProps';
 import theme from '../theme';
+
+Helmet.prototype.shouldComponentUpdate = () => true; // fix for nextjs
 
 export default WrappedComponent => {
   const componentName = WrappedComponent.displayName || WrappedComponent.name;
 
-  class WithData extends Component {
+  return HNRS(class WithData extends Component {
     static displayName = `withData(${componentName})`;
     static WrappedComponent = WrappedComponent;
 
-    static async getPageProps(ctx) {
-      return getInitialProps(WrappedComponent, ctx);
-    }
-
-    static renderComponent({ router, apolloClient, theme, ...props }) {
+    static renderComponent({ router, apolloClient, ...props }) {
       return (
         <ThemeProvider theme={theme}>
           <ApolloProvider client={apolloClient}>
@@ -28,8 +26,7 @@ export default WrappedComponent => {
       );
     }
 
-    static async getServerInitialProps({ Component, router, ctx }) {
-      const pageProps = await WithData.getPageProps({ Component, router, ctx });
+    static async getServerInitialProps({ Component, router, ctx }, pageProps) {
       const apolloClient = createApolloClient({});
 
       try {
@@ -38,7 +35,7 @@ export default WrappedComponent => {
           Component,
           router,
           apolloClient,
-          theme,
+          traverse: true,
         });
         await getDataFromTree(app);
       } catch (error) {
@@ -52,40 +49,41 @@ export default WrappedComponent => {
 
       return {
         ...pageProps,
-        theme,
         apolloState,
       };
     }
 
-    static async getClientInitialProps({ Component, router, ctx }) {
-      const { theme, apolloState } = __NEXT_DATA__.props;
-
-      const pageProps = await WithData.getPageProps({ Component, router, ctx });
+    static async getClientInitialProps({ Component, router, ctx }, pageProps) {
+      const { apolloState } = window.__NEXT_DATA__.props;
 
       return {
         ...pageProps,
-        theme,
         apolloState,
       };
     }
 
     static async getInitialProps({ Component, router, ctx }) {
-      return process.browser ? WithData.getClientInitialProps({ Component, router, ctx }) : WithData.getServerInitialProps({ Component, router, ctx });
+      const initialProps = super.getInitialProps({ Component, router, ctx });
+
+      return process.browser
+        ? await WithData.getClientInitialProps({ Component, router, ctx }, initialProps)
+        : await WithData.getServerInitialProps({ Component, router, ctx }, initialProps);
     }
 
-    // Server Side Transfer
-    apolloClient = createApolloClient(this.props.apolloState, this.props.config);
-    theme = this.props.theme;
+    get apolloClient() {
+      if (!this._apolloClient) {
+        this._apolloClient = createApolloClient(this.props.apolloState);
+      }
+      return this._apolloClient;
+    }
 
     render() {
 
       return WithData.renderComponent({
         ...this.props,
         apolloClient: this.apolloClient,
-        theme: this.theme,
+        theme,
       });
     };
-  }
-
-  return WithData;
+  }, WrappedComponent);
 };

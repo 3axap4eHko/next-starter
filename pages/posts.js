@@ -3,10 +3,11 @@ import {} from 'prop-types';
 import Link from 'next/link';
 import Helmet from 'react-helmet';
 import { createUseStyles } from 'react-jss';
+import makeLink from '../components/makeLink';
 
-const useStyles = createUseStyles(({ colors }) => ({
+const useStyles = createUseStyles(({ palette }) => ({
   link: {
-    color: colors.primary,
+    color: palette.primary,
   },
 }));
 
@@ -15,7 +16,7 @@ export default function Posts() {
 
   return (
     <>
-      <Link href="/">
+      <Link {...makeLink('/')}>
         <a className={classes.link}>Dashboard</a>
       </Link>
       Post

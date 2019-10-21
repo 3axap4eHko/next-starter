@@ -5,7 +5,7 @@ module.exports = {
 
   },
   publicRuntimeConfig: {
-    //graphqlEndpoint: 'ws://localhost:3000/subscription',
+    graphqlEndpoint: 'http://localhost:3000/graphql',
     //subscriptionEndpoint: 'ws://localhost:3000/subscription',
   },
   webpack: (config, {}) => {
