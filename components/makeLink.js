@@ -1,11 +1,11 @@
 import React, { useMemo } from 'react';
-import PTRE from 'path-to-regexp';
+import { pathToRegexp, compile,  } from 'path-to-regexp';
 import { useRouter } from 'next/router';
 
 export const isActive = (pattern, exact) => {
   const router = useRouter();
   return useMemo(() => {
-    const regexp = PTRE(pattern);
+    const regexp = pathToRegexp(pattern);
     return regexp.test(router.pathname) || (!exact && router.pathname.startsWith(pattern));
   }, [pattern, router.pathname]);
 };
@@ -13,8 +13,8 @@ export const isActive = (pattern, exact) => {
 export default function (to, params) {
   return useMemo(() => {
     const keys = [];
-    PTRE(to, keys);
-    const build = PTRE.compile(to);
+    pathToRegexp(to, keys);
+    const build = compile(to);
     const hrefValues = keys.reduce((result, key) => {
       return { ...result, [key.name]: `[${key.name}]` };
     }, {});
