@@ -1,28 +1,34 @@
 import React from 'react';
-import {} from 'prop-types';
+import { } from 'prop-types';
 import Link from 'next/link';
-import Helmet from 'react-helmet';
-import { createUseStyles } from 'react-jss';
+import Head from 'next/head';
+import gql from 'graphql-tag'
+import useTheme from '../components/useTheme';
+import useQuery from '../components/useQuery';
 import makeLink from '../components/makeLink';
 
-const useStyles = createUseStyles(({ palette }) => ({
-  link: {
-    color: palette.primary,
-  },
-}));
+const ViewerQuery = gql`
+  query DummyQuery {
+    values {
+      id
+    }
+  }
+`;
 
 export default function Index() {
-  const classes = useStyles();
+  const theme = useTheme();
+  const { data, loading, error } = useQuery(ViewerQuery);
 
   return (
     <>
       <Link {...makeLink('/posts')}>
-        <a className={classes.link}>Post</a>
+        <a className={''}>Post</a>
       </Link>
       Dashboard
-      <Helmet>
+      {data?.values.map(({ id }, index) => <div key={index}>{id}</div>)}
+      <Head>
         <title>Dashboard</title>
-      </Helmet>
+      </Head>
     </>
   );
 }

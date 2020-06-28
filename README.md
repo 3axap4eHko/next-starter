@@ -1,6 +1,6 @@
 # Next Starter
 
-NextJS GraphQL JSS SSR starter
+NextJS GraphQL SSR starter
 
 ## SSR Render flow
 

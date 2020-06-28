@@ -7,5 +7,4 @@ export default {
     secondary: '#bf360c',
     secondaryContrast: '#ffffff',
   },
-}
-;
+};

@@ -8,7 +8,7 @@ export default (initState) => {
 
   return new ApolloClient({
     connectToDevTools: true,
-    ssrMode: false,
+    ssrMode: !process.browser,
     link,
     cache,
   });

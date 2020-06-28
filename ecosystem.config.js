@@ -1,8 +1,10 @@
-const isDev = process.env.NODE_ENV === 'development';
+const isDev = process.env.NODE_ENV !== 'production';
+const DEBUGGER = !!process.env.DBG ? '--inspect-brk' : '';
 
-const instances = isDev ? 1 : 3;
+const instances = isDev ? 1 : 'max';
 const execMode = isDev ? 'fork' : 'cluster';
-const watch = isDev ? ['./server.js', './actions', './utils'] : false;
+const watch = isDev ? ['./server.js', './next.config.js', './utils'] : false;
+const node_args = isDev ? `-r @babel/register -r dotenv/config ${DEBUGGER}` : '';
 
 module.exports = {
   apps: [
@@ -14,7 +16,7 @@ module.exports = {
       autorestart: true,
       watch,
       max_memory_restart: '2G',
-      node_args: '-r @babel/register -r dotenv/config',
+      node_args,
     },
   ],
 };

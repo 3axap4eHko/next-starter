@@ -1,28 +1,22 @@
 import React from 'react';
 import {} from 'prop-types';
 import Link from 'next/link';
-import Helmet from 'react-helmet';
-import { createUseStyles } from 'react-jss';
+import Head from 'next/head';
+import useTheme from '../components/useTheme';
 import makeLink from '../components/makeLink';
 
-const useStyles = createUseStyles(({ palette }) => ({
-  link: {
-    color: palette.primary,
-  },
-}));
-
 export default function Posts() {
-  const classes = useStyles();
+  const theme = useTheme();
 
   return (
     <>
       <Link {...makeLink('/')}>
-        <a className={classes.link}>Dashboard</a>
+        <a className={''}>Dashboard</a>
       </Link>
       Post
-      <Helmet>
+      <Head>
         <title>Posts</title>
-      </Helmet>
+      </Head>
     </>
   );
 }

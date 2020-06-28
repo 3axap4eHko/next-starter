@@ -1,14 +1,21 @@
-import 'dotenv/config';
 import { createServer } from 'http';
 import Express from 'express';
 import Next from 'next';
 import bodyParser from 'body-parser';
-import actions from './actions';
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
 const app = Next({ dev });
 const handler = app.getRequestHandler();
+
+
+function graphqlMock(req, res) {
+  res.json({
+    data: {
+      values: Array.from({ length: 10 }).map(() => ({ __typename: 'Value', id: Math.random() })),
+    }
+  });
+}
 
 (async () => {
   await app.prepare();
@@ -18,9 +25,10 @@ const handler = app.getRequestHandler();
 
   expressServer.use(Express.static('public'));
   expressServer.use(bodyParser.json());
-  expressServer.use(actions);
+  expressServer.use('/graphql', graphqlMock);
 
   expressServer.get('*', (req, res) => handler(req, res));
+
 
   httpServer.listen(port, (err) => {
     if (err) {
