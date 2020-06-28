@@ -1,8 +1,11 @@
 module.exports = {
   verbose: true,
-  collectCoverage: !!process.env.TRAVIS || !!process.env.COVERAGE,
-  collectCoverageFrom: ['src/**/*.js'],
-  coveragePathIgnorePatterns: ['/.next', '/node_modules/', '__fixtures__', '__mocks__', '__tests__'],
+  collectCoverage: !!process.env.CI,
+  collectCoverageFrom: [
+    '*/**/*.js',
+    'server.js'
+  ],
+  coveragePathIgnorePatterns: ['/.next', '/coverage', '/node_modules/', '__fixtures__', '__mocks__', '__tests__'],
   coverageDirectory: './coverage',
   setupFiles: ['dotenv/config', '<rootDir>/jest.setup.js'],
   testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/'],
