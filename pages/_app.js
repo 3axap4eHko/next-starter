@@ -1,24 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Application from 'next/app';
 import Head from 'next/head';
 import Router from 'next/router';
-import { ApolloProvider, getDataFromTree } from 'react-apollo';
+import { ThemeProvider } from 'react-jss';
+import { ApolloProvider } from '@apollo/client';
+import { getDataFromTree } from '@apollo/client/react/ssr';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
-import { ThemeProvider } from '../components/useTheme';
 import createApolloClient from '../utils/createApolloClient';
 import theme from '../theme';
-
-const _start = NProgress.start;
-NProgress.start = function(...args) {
-  console.log('START!', new Error().stack.split(/\n/g)[2]);
-  _start.apply(this, args);
-}
-const _done = NProgress.done;
-NProgress.done = function(...args) {
-  console.log('DONE!', new Error().stack.split(/\n/g)[2]);
-  _done.apply(this, args);
-}
 
 Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
@@ -29,7 +19,6 @@ if (process.browser) {
 }
 
 export default class App extends Application {
-
   static renderComponent({ apolloClient, Component, ...props }) {
     return (
       <ThemeProvider theme={theme}>
@@ -92,6 +81,8 @@ export default class App extends Application {
 
   componentDidMount() {
     NProgress.done();
+    const ssrStyles = document.getElementById('ssr-styles');
+    ssrStyles && document.head.removeChild(ssrStyles);
   }
 
   render() {

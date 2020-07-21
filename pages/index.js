@@ -3,7 +3,6 @@ import { } from 'prop-types';
 import Link from 'next/link';
 import Head from 'next/head';
 import gql from 'graphql-tag'
-import useTheme from '../components/useTheme';
 import useQuery from '../components/useQuery';
 import makeLink from '../components/makeLink';
 
@@ -16,7 +15,6 @@ const ViewerQuery = gql`
 `;
 
 export default function Index() {
-  const theme = useTheme();
   const { data, loading, error } = useQuery(ViewerQuery);
 
   return (

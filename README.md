@@ -1,6 +1,6 @@
 # Next Starter
 
-NextJS GraphQL SSR starter
+NextJS GraphQL JSS starter
 
 [![Github Build][github-image]][github-url]
 [![Maintainability][codeclimate-maintainability-image]][codeclimate-maintainability-url]

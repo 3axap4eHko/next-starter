@@ -1,9 +1,8 @@
 import getConfig from 'next/config';
-import { split } from 'apollo-link';
-import { createHttpLink } from 'apollo-link-http';
+import { createHttpLink, split } from '@apollo/client';
 import { createPersistedQueryLink } from 'apollo-link-persisted-queries';
-import { WebSocketLink } from 'apollo-link-ws';
-import { getMainDefinition } from 'apollo-utilities';
+import { WebSocketLink } from '@apollo/client/link/ws';
+import { getMainDefinition } from '@apollo/client/utilities';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -21,6 +20,7 @@ export default () => {
   if (!process.browser || !publicRuntimeConfig.subscriptionEndpoint) {
     return persistedHttpLink;
   }
+
   const wsLink = new WebSocketLink({
     uri: publicRuntimeConfig.subscriptionEndpoint,
     options: {
