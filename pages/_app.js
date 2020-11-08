@@ -23,6 +23,9 @@ export default class App extends Application {
     return (
       <ThemeProvider theme={theme}>
         <ApolloProvider client={apolloClient}>
+          <Head>
+            <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no" />
+          </Head>
           <Component {...props} />
         </ApolloProvider>
       </ThemeProvider>

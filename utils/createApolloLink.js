@@ -6,7 +6,7 @@ import { getMainDefinition } from '@apollo/client/utilities';
 
 const { publicRuntimeConfig } = getConfig();
 
-export default () => {
+export default function createApolloLink() {
 
   const httpLink = createHttpLink({
     uri: publicRuntimeConfig.graphqlEndpoint,

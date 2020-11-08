@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import createApolloLink from './createApolloLink';
 
-export default (initState) => {
+export default function createApolloClient(initState) {
   const link = createApolloLink();
   const cache = new InMemoryCache().restore(initState || {});
 

@@ -10,7 +10,7 @@ export const isActive = (pattern, exact) => {
   }, [pattern, router.pathname]);
 };
 
-export default function (to, params) {
+export default function makeLink(to, params) {
   return useMemo(() => {
     const keys = [];
     pathToRegexp(to, keys);
